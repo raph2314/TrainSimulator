@@ -2,10 +2,10 @@
 // Created by Raphael Lopez on 2021-01-12.
 //
 
-#include "../inc/TrackBuilder.h"
+#include "TrackBuilder.h"
 
-TrackBuilder::TrackBuilder() :
-    currRow(0), currCol(0), exitFlag(false), saveConfirmation(false) {
+TrackBuilder::TrackBuilder(std::string fName) :
+    currRow(0), currCol(0), exitFlag(false), saveConfirmation(false), fileName(fName) {
 
     // Configure ncurses
     initscr();
@@ -47,11 +47,6 @@ bool TrackBuilder::isValidInput(char input) {
         }
     }
 
-    // Newline ('\') without junction ('=') is considered invalid
-    if(input == NEWLANE && junctionTracker.empty()) {
-        isValid = false;
-    }
-
     return isValid;
 }
 
@@ -68,7 +63,7 @@ void TrackBuilder::processInput(char input) {
         // End track configuration
         else if(input == ENTER) {
             exitFlag = true;
-            trackFile.open("./../trackConfig.txt");
+            trackFile.open("./../" + fileName);
 
             for(auto & i : trackConfig) {
                 trackFile << i << '\n';
@@ -77,15 +72,37 @@ void TrackBuilder::processInput(char input) {
             trackFile.close();
         }
 
-        // Handle junctions
+        // Handle new lanes
         else if(input == NEWLANE) {
             // Insert new line
             trackConfig.emplace_back("");
             currRow++;
 
-            // Choose column based on last junction inserted
-            currCol = junctionTracker.top();
-            junctionTracker.pop();
+            /* Brand new lane. Example:
+             *
+             * - - - - - = - - - - -
+             * - - - - - -
+             *
+             */
+            if(junctionTracker.empty()) {
+               currCol = 0;
+            }
+
+            /* New lane starting at junction. Example:
+             *
+             * - - - - - = - - - - -
+             *           - - - - - -
+             *
+             */
+            else {
+                // Choose column based on last junction inserted
+                currCol = junctionTracker.top();
+                junctionTracker.pop();
+
+                // Add spacing to trackConfig
+                std::string spacing(currCol / 2, ' ');
+                trackConfig.back() += spacing;
+            }
         }
 
         else {

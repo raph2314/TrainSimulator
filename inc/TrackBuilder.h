@@ -16,10 +16,12 @@
 #define TRACK     '-'
 #define JUNCTION  '='
 #define SIGNAL    'o'
-#define NEWLANE   '\\' // Used to move to next junction
+#define SPACING   ' '
+#define NEWLANE   '\\'
+#define TRAIN     'T'
 #define ENTER     '\n'
 
-const char validInputs[] = {TRACK, JUNCTION, SIGNAL, NEWLANE, ENTER};
+const char validInputs[] = {TRACK, JUNCTION, SIGNAL, SPACING, NEWLANE, TRAIN, ENTER};
 
 class TrackBuilder {
 private:
@@ -28,12 +30,13 @@ private:
     std::stack<int> junctionTracker;
 
     //  File functionality
+    std::string fileName;
     bool saveConfirmation{}, exitFlag;
     std::vector<std::string> trackConfig;
     std::ofstream trackFile;
 
 public:
-    TrackBuilder();
+    explicit TrackBuilder(std::string fName);
     ~TrackBuilder();
 
     /*-------- Accessors --------*/
