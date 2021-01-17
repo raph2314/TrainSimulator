@@ -48,9 +48,11 @@ Junction::Junction(int col) : TrackComponent(col) {
 }
 
 void Junction::insertComponent(vector<list<TrackComponent*>> *graph, TrackComponent* currNode) {
+    // Insert junction
     std::list<TrackComponent*> newList(1, this);
     graph->push_back(newList);
 
+    // Add edges between junction and its parents
     graph->at(currNode->getTrackComponentID()).push_back(this);
     graph->at(this->getTrackComponentID()).push_back(currNode);
 }

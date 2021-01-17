@@ -4,7 +4,6 @@
 #include "TrackBuilder.h"
 
 int main() {
-    //
     std::string fName = "trackConfig.txt";
 
     // For initial track creation
@@ -14,7 +13,7 @@ int main() {
     // Restore terminal settings
     delete tb;
 
-
+    // Create graph based on the provided file handle
     auto* ts = new TrackSystem(fName);
     bool buildSuccess = ts->buildTrackFromFile();
 

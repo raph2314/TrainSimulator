@@ -49,7 +49,7 @@ bool TrackSystem::buildTrackFromFile() {
                     graphState ^= FIRSTCHAR;
                 }
 
-                else{
+                else {
                     switch(c) {
                         case TRACK: {
                             auto *newTrack = new Track(col);
@@ -62,6 +62,7 @@ bool TrackSystem::buildTrackFromFile() {
                             newJunction->insertComponent(&graph, parent);
                             parent = newJunction;
 
+                            // Track new junctions in junctions stack
                             junctions.push(newJunction);
                             break;
                         }
@@ -113,7 +114,7 @@ void TrackSystem::selectPrevParent(TrackComponent** prevParent) {
 
     // (Case: 0 or 1 Junction): Parent is a new segment
     else {
-        graphState ^= FIRSTCHAR;  // New segment flag ON
+        graphState ^= FIRSTCHAR;
 
         *prevParent = new Track(0);
         std::list<TrackComponent*> newSegment(1, *prevParent);
