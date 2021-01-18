@@ -2,13 +2,17 @@
 // Created by Raphael Lopez on 2021-01-11.
 //
 
-#include "TrackBuilder.h"
 #include "TrackSystem.h"
-#include "TrackComponent.h"
+
 
 TrackSystem::TrackSystem(std::string& fName) : fileName(fName), skippedJunction(nullptr), graphState(0) {
 
 }
+
+vector<list<TrackComponent*>>* TrackSystem::getGraph() { return &graph; };
+
+Train* TrackSystem::getTrain() const { return train; };
+
 
 bool TrackSystem::buildTrackFromFile() {
     // File and line handles for processing
@@ -66,23 +70,19 @@ bool TrackSystem::buildTrackFromFile() {
                             junctions.push(newJunction);
                             break;
                         }
-                        case SIGNAL:
-                            //handle signal
+                        case TRAIN: {
+                            train = new Train(parent->getTrackComponentID(), DIR_EAST);
                             break;
-                        case SPACING:
-                            //handle spacing
+                        }
+                        case SIGNAL_GREEN:
+                            parent->assignSignalEast(SIGNAL_GREEN);
+                            parent->assignSignalWest(SIGNAL_GREEN);
                             break;
-                        case NEWLANE:
-                            //handle newlane
-                            break;
-                        case TRAIN:
-                            //handle train
-                            break;
-                        case ENTER:
-                            //handle enter
-                            break;
+
                         default:
-                            return false;  // Invalid character
+                            if(c == SPACING || c == NEWLANE || c == ENTER);  // Ignore characters
+                            else
+                                return false;  // Invalid character
                     }
                 }
 
@@ -114,6 +114,11 @@ void TrackSystem::selectPrevParent(TrackComponent** prevParent) {
 
     // (Case: 0 or 1 Junction): Parent is a new segment
     else {
+        if(junctions.size() == 1) {
+            skippedJunction = junctions.top(); // Store last junction to rejoin later
+            junctions.pop();
+        }
+
         graphState ^= FIRSTCHAR;
 
         *prevParent = new Track(0);
@@ -148,8 +153,12 @@ void TrackSystem::selectParent(TrackComponent** parent, TrackComponent** prevPar
 void TrackSystem::printTrackSystem() const {
     for(const auto& i: graph) {
         for(const auto j: i) {
-            std::cout << j->getTrackComponentID() << " -> ";
+            std::cout << j->getTrackComponentID();
+
+            std::cout << " -> ";
         }
         std::cout << std::endl;
     }
 }
+
+

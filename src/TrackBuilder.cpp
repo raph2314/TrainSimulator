@@ -5,7 +5,7 @@
 #include "TrackBuilder.h"
 
 TrackBuilder::TrackBuilder(std::string fName) :
-    currRow(0), currCol(0), exitFlag(false), saveConfirmation(false), fileName(fName) {
+        fileName(fName), currRow(0), currCol(0), exitFlag(false), saveConfirmation(false) {
 
     // Configure ncurses
     initscr();

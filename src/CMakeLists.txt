@@ -16,5 +16,5 @@ set(EXECUTABLE_OUTPUT_PATH ../../bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${TRAIN_SIMULATION_SOURCE_DIR}/lib)
 
-add_executable(TrainSimulation main.cpp TrackSystem.cpp ../inc/TrackSystem.h TrackBuilder.cpp ../inc/TrackBuilder.h TrackComponent.cpp ../inc/TrackComponent.h)
+add_executable(TrainSimulation main.cpp TrackSystem.cpp ../inc/TrackSystem.h TrackBuilder.cpp ../inc/TrackBuilder.h TrackComponent.cpp ../inc/TrackComponent.h Train.cpp ../inc/Train.h)
 target_link_libraries(TrainSimulation ${CURSES_LIBRARIES})

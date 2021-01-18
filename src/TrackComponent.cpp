@@ -12,15 +12,34 @@ int TrackComponent::nextID = 0;
 /* TrackComponent as base class
  *-----------------------------------------------------*/
 TrackComponent::TrackComponent(int col) : trackComponentCol(col) {
-    trackComponentID = nextID++;
+    trackComponentID = nextID++;  // Track IDs are incremented upon creation
+
+    // Default component contains no train and no signal (default signalState to green)
+    signalEast = SIGNAL_GREEN;
+    signalWest = SIGNAL_GREEN;
+
+    hasTrain = false;
+    hasSignal = false;
 }
 
-int TrackComponent::getTrackComponentID() const {
-    return trackComponentID;
+int TrackComponent::getTrackComponentID() const { return trackComponentID; }
+
+int TrackComponent::getTrackComponentCol() const { return trackComponentCol; }
+
+bool TrackComponent::containsSignal() const { return hasSignal; }
+
+char TrackComponent::getSignalEast() const { return signalEast; }
+
+char TrackComponent::getSignalWest() const { return signalWest;}
+
+void TrackComponent::assignSignalEast(char state) {
+    hasSignal = true;
+    signalEast = state;
 }
 
-int TrackComponent::getTrackComponentCol() const {
-    return trackComponentCol;
+void TrackComponent::assignSignalWest(char state) {
+    hasSignal = true;
+    signalWest = state;
 }
 
 /*-----------------------------------------------------*/

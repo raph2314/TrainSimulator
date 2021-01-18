@@ -2,6 +2,7 @@
 
 #include "TrackSystem.h"
 #include "TrackBuilder.h"
+#include "TrackComponent.h"
 
 int main() {
     std::string fName = "trackConfig.txt";
@@ -16,6 +17,10 @@ int main() {
     // Create graph based on the provided file handle
     auto* ts = new TrackSystem(fName);
     bool buildSuccess = ts->buildTrackFromFile();
+
+    // Find optimal path and simulate train motion
+    auto* tc = new TrainController(ts->getGraph(), ts->getTrain());
+
 
 
     // For debugging

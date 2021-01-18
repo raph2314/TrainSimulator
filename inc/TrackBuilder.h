@@ -13,15 +13,19 @@
 #include <cstring>
 #include <curses.h>
 
-#define TRACK     '-'
-#define JUNCTION  '='
-#define SIGNAL    'o'
-#define SPACING   ' '
-#define NEWLANE   '\\'
-#define TRAIN     'T'
-#define ENTER     '\n'
+#define TRACK           '-'
+#define JUNCTION        '='
+#define TRAIN           'T'
+#define SIGNAL_GREEN    'o'
+#define SIGNAL_RED      'x'
+#define DIR_WEST        'W'
+#define DIR_EAST        'E'
+#define SPACING         ' '
+#define NEWLANE         '\\'
+#define ENTER           '\n'
 
-const char validInputs[] = {TRACK, JUNCTION, SIGNAL, SPACING, NEWLANE, TRAIN, ENTER};
+const char validInputs[] = {TRACK, JUNCTION, TRAIN, SIGNAL_GREEN, SIGNAL_RED, SPACING, NEWLANE, \
+                            DIR_WEST, DIR_EAST, ENTER};
 
 class TrackBuilder {
 private:
