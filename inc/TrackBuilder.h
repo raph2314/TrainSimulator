@@ -35,7 +35,7 @@ private:
 
     //  File functionality
     std::string fileName;
-    bool saveConfirmation{}, exitFlag;
+    bool saveConfirmation, exitFlag;
     std::vector<std::string> trackConfig;
     std::ofstream trackFile;
 

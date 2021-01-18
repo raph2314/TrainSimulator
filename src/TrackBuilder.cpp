@@ -81,6 +81,7 @@ void TrackBuilder::processInput(char input) {
             /* Brand new lane. Example:
              *
              * - - - - - = - - - - -
+             *
              * - - - - - -
              *
              */

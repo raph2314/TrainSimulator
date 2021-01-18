@@ -11,8 +11,9 @@ Train::Train(int locationID, char direction) : trainID(0) {
 
 
 
-TrainController::TrainController(vector<list<TrackComponent *>> *graph, Train * train) {
-
+TrainController::TrainController(vector<list<TrackComponent *>> *graph, Train* train) {
+    pGraph = graph;
+    pTrain = train;
 }
 
 

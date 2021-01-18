@@ -27,7 +27,9 @@ class TrainController {
 public:
     TrainController(vector<list<struct TrackComponent*>> *graph, Train* train);
 
+private:
+    vector<list<TrackComponent*>> *pGraph;
+    Train* pTrain;
 };
-
 
 #endif //TRAINSIMULATION_TRAIN_H
